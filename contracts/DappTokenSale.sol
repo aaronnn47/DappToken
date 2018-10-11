@@ -48,4 +48,17 @@ contract DappTokenSale {
 
     }
 
+    // ending token dapptokensale
+
+    function endSale() public {
+        // require only an admin can end sale
+        require(msg.sender == admin);
+
+        // transfer remaining dapp tokens to admin
+        require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));
+
+        // destroy contract
+        selfdestruct(admin);
+    }
 }
+

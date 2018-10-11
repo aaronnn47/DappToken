@@ -23,27 +23,27 @@ contract DappToken{
         address indexed _to,
         uint256 _value
     );
-    // approve event
 
+    // approve event
     event Approval(
         address indexed _owner,
         address indexed _spender,
         uint256 _value
     );
-    // transfer event
 
+    // transfer event
     mapping(address => uint256) public balanceOf;
     
     //allowance
     mapping(address => mapping(address => uint256)) public allowance;
 
     function DappToken (uint256 _initialSupply) public {
-
         balanceOf[msg.sender] = _initialSupply;
 
         //allocate the initial supply
         totalSupply = _initialSupply;
     }
+
     // transfer
     function transfer(address _to, uint256 _value) public returns (bool success){
     // exception if account doesn't have enough
@@ -57,14 +57,11 @@ contract DappToken{
         Transfer(msg.sender, _to, _value);
 
     // return boolean
-
         return true;
     }
 
     // Delegated Transfer
-    
     // approve function
-
     function approve(address _spender, uint256 _value) public returns (bool success){
         //allowance 
         allowance[msg.sender][_spender] = _value;
