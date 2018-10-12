@@ -75,11 +75,13 @@ contract('Dapp Token Sale', function(accounts){
         return DappToken.deployed().then(function(instance){
             tokenInstance = instance;
             return DappTokenSale.deployed()
-        }).then(function(instance){
+        })
+        .then(function(instance){
             tokenSaleInstance = instance;
             // try to end sale from account other than the admin
             return tokenSaleInstance.endSale({from: buyer})
-        }).then(assert.fail).catch(function(error){
+        })
+        .then(assert.fail).catch(function(error){
             assert(error.message.indexOf('revert' >= 0, 'only admin can end sale'));
 
             //end sale as admin
@@ -89,9 +91,8 @@ contract('Dapp Token Sale', function(accounts){
         }).then(function(balance){
             assert.equal(balance.toNumber(), 999990, 'returns all unsold dapp tokens to admin')
             // check that token prie was reset when self destruct was called
-            return tokenSaleInstance.tokenPrice()
-        }).then(function(price){
-            assert.equal(price.toNumber(), 0, 'token price was reset')
+            balance = web3.eth.getBalance(tokenSaleInstance.address)
+            assert.equal(balance.toNumber(), 0);
         })
     })
 })
